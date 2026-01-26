@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://cfps3k7x2xanm"]
+
+[ext_resource type="Script" path="res://scenes/ui/hud/fps_counter.gd" id="1_fps"]
+
+[node name="FPSCounter" type="Label"]
+offset_right = 100.0
+offset_bottom = 24.0
+script = ExtResource("1_fps")

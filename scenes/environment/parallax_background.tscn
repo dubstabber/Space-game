@@ -1,0 +1,96 @@
+[gd_scene load_steps=7 format=3 uid="uid://cxl8v7qh3k6dm"]
+
+[ext_resource type="Script" uid="uid://bbt8dtnj5c8j3" path="res://scenes/environment/parallax_background.gd" id="1_parallax"]
+[ext_resource type="Script" uid="uid://4ypn6r1gx2k3" path="res://scenes/environment/chunked_star_field.gd" id="2_starfield"]
+[ext_resource type="Script" uid="uid://ch5a35dj70c24" path="res://scenes/environment/nebula_field.gd" id="3_nebula"]
+[ext_resource type="Script" uid="uid://btnhqath3cqp0" path="res://scenes/environment/chunked_dust_field.gd" id="4_dust"]
+[ext_resource type="Script" uid="uid://cn8bsrlkmn3p" path="res://scenes/environment/shader_galaxy_field.gd" id="4_p25te"]
+[ext_resource type="Script" uid="uid://vlspgrdeeu5r" path="res://scenes/environment/galaxy_field.gd" id="5_galaxy"]
+
+[node name="ParallaxBackground" type="Node2D"]
+script = ExtResource("1_parallax")
+
+[node name="NebulaLayer" type="Parallax2D" parent="."]
+scroll_scale = Vector2(0.05, 0.05)
+
+[node name="NebulaField" type="Node2D" parent="NebulaLayer"]
+script = ExtResource("3_nebula")
+secondary_color = Color(0.667426, 0.49587643, 0, 0.5019608)
+nebula_coverage = 0.11
+
+[node name="GalaxyLayer" type="Parallax2D" parent="."]
+scroll_scale = Vector2(0.08, 0.08)
+
+[node name="GalaxyField" type="Node2D" parent="GalaxyLayer"]
+script = ExtResource("5_galaxy")
+spawn_chance = 0.43
+stars_per_galaxy = Vector2i(150, 250)
+min_radius = 180.0
+max_radius = 350.0
+base_alpha = 0.8
+blackhole_chance = 0.678
+blackhole_size_ratio = 0.051
+glow_intensity = 0.967
+
+[node name="ShaderGalaxyLayer" type="Parallax2D" parent="."]
+scroll_scale = Vector2(0.04, 0.04)
+
+[node name="ShaderGalaxyField" type="Node2D" parent="ShaderGalaxyLayer"]
+script = ExtResource("4_p25te")
+spawn_chance = 0.245
+min_galaxy_size = 550.0
+max_galaxy_size = 900.0
+base_alpha = 0.95
+
+[node name="StarLayerFar" type="Parallax2D" parent="."]
+scroll_scale = Vector2(0.1, 0.1)
+
+[node name="ChunkedStarField" type="Node2D" parent="StarLayerFar"]
+script = ExtResource("2_starfield")
+max_stars = 4000
+stars_per_chunk = 15
+star_color = Color(1, 1, 1, 0.3)
+
+[node name="StarLayerMid1" type="Parallax2D" parent="."]
+scroll_scale = Vector2(0.2, 0.2)
+
+[node name="ChunkedStarField" type="Node2D" parent="StarLayerMid1"]
+script = ExtResource("2_starfield")
+max_stars = 3000
+stars_per_chunk = 12
+star_color = Color(1, 1, 1, 0.5)
+base_size = 1.5
+layer_id = 1
+
+[node name="StarLayerMid2" type="Parallax2D" parent="."]
+scroll_scale = Vector2(0.3, 0.3)
+
+[node name="ChunkedStarField" type="Node2D" parent="StarLayerMid2"]
+script = ExtResource("2_starfield")
+stars_per_chunk = 10
+star_color = Color(1, 1, 1, 0.7)
+base_size = 2.0
+layer_id = 2
+
+[node name="StarLayerNear" type="Parallax2D" parent="."]
+scroll_scale = Vector2(0.5, 0.5)
+
+[node name="ChunkedStarField" type="Node2D" parent="StarLayerNear"]
+script = ExtResource("2_starfield")
+stars_per_chunk = 8
+star_color = Color(1, 1, 1, 0.9)
+base_size = 2.5
+layer_id = 3
+
+[node name="DustLayer" type="Parallax2D" parent="."]
+scroll_scale = Vector2(0.8, 0.8)
+
+[node name="ChunkedDustField" type="Node2D" parent="DustLayer"]
+script = ExtResource("4_dust")
+max_particles = 2000
+particles_per_chunk = 30
+dust_color = Color(0.69803923, 0.7490196, 0.8509804, 0.14117648)
+base_size = 4.0
+size_variation = 3.0
+drift_speed = 0.8
+turbulence = 0.25

@@ -1,0 +1,28 @@
+[gd_scene load_steps=3 format=3 uid="uid://casteroid1234"]
+
+[ext_resource type="Script" path="res://scenes/entities/asteroids/asteroid.gd" id="1_asteroid"]
+[ext_resource type="Script" path="res://scripts/components/health_component.gd" id="2_health"]
+
+[node name="Asteroid" type="StaticBody2D"]
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("1_asteroid")
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+color = Color(0.35, 0.32, 0.3, 1)
+
+[node name="Line2D" type="Line2D" parent="."]
+width = 1.5
+default_color = Color(0.5, 0.47, 0.44, 1)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+
+[node name="HealthComponent" type="Node" parent="."]
+script = ExtResource("2_health")
+max_health = 60
+
+[node name="Hitbox" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 8
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Hitbox"]

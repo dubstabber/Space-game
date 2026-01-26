@@ -1,0 +1,42 @@
+# Godot-specific ignores
+*.import
+.import/
+.export/
+.godot/
+tmp/
+.log
+
+# Build outputs
+bin/
+obj/
+
+# IDE and editor files
+.vscode/
+.idea/
+.windsurf/
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Debug files
+debug-output.txt
+*.debug
+PLAN.md
+
+# Temporary files
+*.tmp
+*.temp
+
+# Backup files
+*.bak
+*.backup
+

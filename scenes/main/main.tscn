@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://b3f7k2nmxp4yw"]
+
+[ext_resource type="PackedScene" uid="uid://dm5k8xqr2w7a3" path="res://scenes/world/world.tscn" id="1_world"]
+[ext_resource type="PackedScene" uid="uid://cfps3k7x2w9nm" path="res://scenes/ui/hud/fps_counter.tscn" id="2_fps"]
+
+[node name="Main" type="Node"]
+
+[node name="World" parent="." instance=ExtResource("1_world")]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="FPSCounter" parent="CanvasLayer" instance=ExtResource("2_fps")]
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 110.0
+offset_bottom = 34.0
