@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://cminimap7x2xa"]
+
+[ext_resource type="Script" path="res://scenes/ui/hud/minimap.gd" id="1_minimap"]
+
+[node name="Minimap" type="Control"]
+anchors_preset = 0
+anchor_top = 1.0
+anchor_bottom = 1.0
+grow_vertical = 0
+script = ExtResource("1_minimap")

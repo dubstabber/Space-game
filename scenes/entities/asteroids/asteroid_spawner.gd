@@ -15,6 +15,7 @@ var _target: Node2D = null
 var _spawn_timer: float = 0.0
 var _asteroids: Array[Node2D] = []
 var _rng: RandomNumberGenerator
+var _world_bounds: Vector2 = Vector2.ZERO
 
 const AsteroidScene := preload("res://scenes/entities/asteroids/asteroid.tscn")
 
@@ -40,6 +41,10 @@ func set_target(target: Node2D) -> void:
 
 func set_density(density: float) -> void:
 	density_multiplier = density
+
+
+func set_world_bounds(bounds: Vector2) -> void:
+	_world_bounds = bounds
 
 
 func _initialize_seed() -> void:
@@ -117,6 +122,11 @@ func _get_spawn_position() -> Vector2:
 
 
 func _is_position_valid(pos: Vector2) -> bool:
+	if _world_bounds != Vector2.ZERO:
+		var half_bounds := _world_bounds / 2.0
+		if abs(pos.x) > half_bounds.x or abs(pos.y) > half_bounds.y:
+			return false
+	
 	for asteroid in _asteroids:
 		if not is_instance_valid(asteroid):
 			continue

@@ -23,6 +23,9 @@ extends Resource
 @export var has_safe_zone: bool = false
 @export var safe_zone_radius: float = 500.0
 
+@export_group("World Boundaries")
+@export var world_map_size: Vector2 = Vector2(40000, 40000)
+
 
 static func create_default_space() -> MapData:
 	var map := MapData.new()

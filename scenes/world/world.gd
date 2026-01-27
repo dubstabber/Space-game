@@ -8,8 +8,12 @@ extends Node2D
 
 var _current_universe_data: UniverseData
 var _current_map_data: MapData
+var _minimap: Control = null
+var _portal_slots: Array = []
+var _world_map_size: Vector2 = Vector2(4000, 4000)
 
 const PortalScene := preload("res://scenes/environment/portals/universe_portal.tscn")
+const Minimap := preload("res://scenes/ui/hud/minimap.gd")
 
 
 func _ready() -> void:
@@ -74,18 +78,64 @@ func _spawn_portals() -> void:
 	var portal_count := connected_maps.size()
 	
 	if portal_count == 0:
+		_update_minimap_portals([])
 		return
 	
 	var rng := RandomNumberGenerator.new()
 	rng.seed = SeedManager.get_entity_seed(MapManager.current_map_id, "portals", 0)
 	
+	_portal_slots = Minimap.get_random_portal_slots(portal_count, rng)
+	
+	var portal_positions: Array[Vector2] = []
+	
 	for i in range(portal_count):
 		var destination := connected_maps[i]
-		var angle := (TAU / portal_count) * i + rng.randf_range(-0.2, 0.2)
-		var distance := rng.randf_range(800.0, 1200.0)
-		var pos := Vector2(cos(angle), sin(angle)) * distance
+		var slot: int = _portal_slots[i]
+		var pos := _get_world_position_for_slot(slot)
 		
 		var portal := PortalScene.instantiate()
-		portal.global_position = pos
 		portal.initialize("portal_%s_%s" % [MapManager.current_map_id, destination], destination)
 		portals_container.add_child(portal)
+		portal.global_position = pos
+		portal_positions.append(pos)
+		print("[World] Spawned portal to '%s' at %s" % [destination, pos])
+	
+	_update_minimap_portals(portal_positions)
+
+
+func _get_world_position_for_slot(slot: int) -> Vector2:
+	var padding_ratio := 0.15
+	var half_world := _world_map_size / 2.0
+	var padded_half := half_world * (1.0 - padding_ratio)
+	
+	var col := slot % 3
+	var row := slot / 3
+	
+	var x := -padded_half.x + padded_half.x * col
+	var y := -padded_half.y + padded_half.y * row
+	
+	return Vector2(x, y)
+
+
+func _update_minimap_portals(world_positions: Array[Vector2]) -> void:
+	if _minimap == null:
+		return
+	_minimap.set_portal_positions(world_positions)
+
+
+func set_minimap(minimap: Control) -> void:
+	_minimap = minimap
+	_current_map_data = MapManager.get_current_map()
+	
+	if _current_map_data:
+		_world_map_size = _current_map_data.world_map_size
+	
+	if _minimap:
+		_minimap.set_world_map_size(_world_map_size)
+		if player:
+			_minimap.set_player(player)
+	
+	if asteroid_spawner:
+		asteroid_spawner.set_world_bounds(_world_map_size)
+	
+	_spawn_portals()

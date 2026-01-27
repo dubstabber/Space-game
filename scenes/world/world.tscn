@@ -14,6 +14,7 @@ script = ExtResource("1_world")
 [node name="Entities" type="Node2D" parent="."]
 
 [node name="Player" parent="Entities" instance=ExtResource("3_player")]
+position = Vector2(-882, -465)
 
 [node name="PlayerCamera" parent="." instance=ExtResource("4_camera")]
 
