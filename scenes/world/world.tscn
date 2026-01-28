@@ -19,6 +19,7 @@ position = Vector2(-882, -465)
 [node name="PlayerCamera" parent="." instance=ExtResource("4_camera")]
 
 [node name="AsteroidSpawner" parent="." instance=ExtResource("5_spawner")]
+density_multiplier = 0.1
 
 [node name="Portals" type="Node2D" parent="."]
 

@@ -14,6 +14,9 @@ var _world_map_size: Vector2 = Vector2(4000, 4000)
 
 const PortalScene := preload("res://scenes/environment/portals/universe_portal.tscn")
 const Minimap := preload("res://scenes/ui/hud/minimap.gd")
+var _arrival_from_map: String = ""
+var _arrival_to_map: String = ""
+var _has_pending_arrival: bool = false
 
 
 func _ready() -> void:
@@ -60,8 +63,36 @@ func _setup_current_map() -> void:
 	
 	_spawn_portals()
 	
-	if player and _current_map_data.player_spawn_position != Vector2.ZERO:
-		player.global_position = _current_map_data.player_spawn_position
+	if player:
+		var placed := false
+		# If we just arrived via teleport into this map, spawn near the return portal
+		if _has_pending_arrival and MapManager.current_map_id == _arrival_to_map and _arrival_from_map != "":
+			if portals_container:
+				var return_portal_pos := Vector2.INF
+				for portal in portals_container.get_children():
+					# Universe portal exposes destination_map_id as exported var
+					if portal.destination_map_id == _arrival_from_map:
+						return_portal_pos = portal.global_position
+						break
+				if return_portal_pos != Vector2.INF:
+					var rng := RandomNumberGenerator.new()
+					rng.randomize()
+					var angle := rng.randf_range(0.0, TAU)
+					var min_radius := 120.0
+					var max_radius := 150.0
+					var radius := rng.randf_range(min_radius, max_radius)
+					var spawn := return_portal_pos + Vector2(cos(angle), sin(angle)) * radius
+					player.global_position = spawn
+					# Snap camera to player position immediately
+					if player_camera:
+						player_camera.global_position = spawn
+					placed = true
+			_has_pending_arrival = false
+			_arrival_from_map = ""
+			_arrival_to_map = ""
+		
+		if not placed and _current_map_data.player_spawn_position != Vector2.ZERO:
+			player.global_position = _current_map_data.player_spawn_position
 
 
 func _spawn_portals() -> void:
@@ -97,6 +128,12 @@ func _spawn_portals() -> void:
 		portal.initialize("portal_%s_%s" % [MapManager.current_map_id, destination], destination)
 		portals_container.add_child(portal)
 		portal.global_position = pos
+		# Capture teleport start to compute arrival spawn on the next map
+		portal.teleport_started.connect(func(dest_map_id: String) -> void:
+			_arrival_from_map = MapManager.current_map_id
+			_arrival_to_map = dest_map_id
+			_has_pending_arrival = true
+		)
 		portal_positions.append(pos)
 		print("[World] Spawned portal to '%s' at %s" % [destination, pos])
 	

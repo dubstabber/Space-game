@@ -11,6 +11,13 @@ enum AsteroidSize {SMALL, MEDIUM, LARGE}
 @export var rotation_speed: float = 0.5
 @export var resource_drop_count: Vector2i = Vector2i(1, 3)
 
+@export_group("Movement")
+@export var drift_speed_min: float = 5.0
+@export var drift_speed_max: float = 20.0
+@export var spread_speed_min: float = 40.0
+@export var spread_speed_max: float = 80.0
+
+var velocity: Vector2 = Vector2.ZERO
 var _geometry_seed: int = 0
 var _rotation_direction: float = 1.0
 
@@ -29,12 +36,14 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	rotation += rotation_speed * _rotation_direction * delta
+	global_position += velocity * delta
 
 
-func initialize(type: String, size: AsteroidSize, seed_value: int = 0) -> void:
+func initialize(type: String, size: AsteroidSize, seed_value: int = 0, initial_velocity: Vector2 = Vector2.ZERO) -> void:
 	asteroid_type = type
 	size_category = size
 	_geometry_seed = seed_value if seed_value != 0 else randi()
+	velocity = initial_velocity
 	
 	if is_inside_tree():
 		_setup_asteroid()
@@ -46,6 +55,11 @@ func _setup_asteroid() -> void:
 	
 	_rotation_direction = 1.0 if rng.randf() > 0.5 else -1.0
 	rotation_speed = rng.randf_range(0.2, 0.8)
+	
+	if velocity == Vector2.ZERO:
+		var drift_angle := rng.randf() * TAU
+		var drift_speed := rng.randf_range(drift_speed_min, drift_speed_max)
+		velocity = Vector2(cos(drift_angle), sin(drift_angle)) * drift_speed
 	
 	var size_multiplier := _get_size_multiplier()
 	var actual_radius := base_radius * size_multiplier
@@ -167,9 +181,14 @@ func _spawn_child_asteroids() -> void:
 	for i in range(child_count):
 		var child := asteroid_scene.instantiate()
 		var angle := (TAU / child_count) * i + rng.randf_range(-0.3, 0.3)
-		var offset := Vector2(cos(angle), sin(angle)) * (base_radius * 0.5)
+		var direction := Vector2(cos(angle), sin(angle))
+		var offset := direction * (base_radius * 0.5)
+		
+		var spread_speed := rng.randf_range(spread_speed_min, spread_speed_max)
+		var child_velocity := velocity + (direction * spread_speed)
+		
 		child.global_position = global_position + offset
-		child.initialize(asteroid_type, child_size, rng.randi())
+		child.initialize(asteroid_type, child_size, rng.randi(), child_velocity)
 		
 		var parent := get_parent()
 		if parent:

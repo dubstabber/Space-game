@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://dm5k8xqr2w7a3" path="res://scenes/world/world.tscn" id="1_world"]
 [ext_resource type="PackedScene" uid="uid://cfps3k7x2xanm" path="res://scenes/ui/hud/fps_counter.tscn" id="2_fps"]
 [ext_resource type="Script" uid="uid://c2kjox5wkg6ms" path="res://scenes/main/main.gd" id="3_main"]
-[ext_resource type="PackedScene" path="res://scenes/ui/hud/minimap.tscn" id="4_minimap"]
+[ext_resource type="PackedScene" uid="uid://cminimap7x2xa" path="res://scenes/ui/hud/minimap.tscn" id="4_minimap"]
 
 [node name="Main" type="Node"]
 script = ExtResource("3_main")
@@ -22,3 +22,6 @@ offset_bottom = 34.0
 layout_mode = 3
 anchors_preset = 2
 map_size = Vector2(300, 200)
+player_dot_radius = 2.0
+arrow_size = 5.0
+portal_icon_size = 3.0

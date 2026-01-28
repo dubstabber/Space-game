@@ -140,17 +140,19 @@ func _draw_portals() -> void:
 
 
 func _draw_portal_icon(pos: Vector2) -> void:
-	var s := portal_icon_size
-	var points: PackedVector2Array = [
-		pos + Vector2(0, -s),
-		pos + Vector2(s * 0.866, s * 0.5),
-		pos + Vector2(-s * 0.866, s * 0.5)
-	]
-	draw_colored_polygon(points, portal_color)
+	# Draw portal similar to world portal with concentric rings
+	var outer_radius := portal_icon_size
+	var inner_radius := portal_icon_size * 0.6
+	var center_radius := portal_icon_size * 0.3
 	
-	var outline_points := points.duplicate()
-	outline_points.append(points[0])
-	draw_polyline(outline_points, portal_color.lightened(0.3), 1.5)
+	# Draw outer ring
+	draw_circle(pos, outer_radius, portal_color.lightened(0.2), false, 2.0)
+	
+	# Draw inner ring  
+	draw_circle(pos, inner_radius, portal_color, false, 1.5)
+	
+	# Draw center glow
+	draw_circle(pos, center_radius, portal_color.darkened(0.3))
 
 
 func _world_to_map(world_pos: Vector2) -> Vector2:

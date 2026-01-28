@@ -189,10 +189,10 @@ func get_asteroid_count() -> int:
 	return _asteroids.size()
 
 
-func spawn_asteroid_at(pos: Vector2, asteroid_type: String, size: int) -> Node2D:
+func spawn_asteroid_at(pos: Vector2, asteroid_type: String, size: int, velocity: Vector2 = Vector2.ZERO) -> Node2D:
 	var asteroid := AsteroidScene.instantiate()
 	asteroid.global_position = pos
-	asteroid.initialize(asteroid_type, size, _rng.randi())
+	asteroid.initialize(asteroid_type, size, _rng.randi(), velocity)
 	asteroid.destroyed.connect(_on_asteroid_destroyed)
 	
 	add_child(asteroid)

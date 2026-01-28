@@ -24,12 +24,16 @@ var _is_thrusting: bool = false
 @onready var collision_shape: CollisionPolygon2D = $CollisionShape
 @onready var projectile_spawn: Marker2D = $ProjectileSpawn
 
+var _shoot_sound_player: AudioStreamPlayer
+var _shoot_sound: AudioStreamWAV
+
 const Projectile = preload("res://scenes/entities/projectiles/projectile.tscn")
 
 
 func _ready() -> void:
 	current_health = max_health
 	_setup_ship_geometry()
+	_setup_shoot_sound()
 
 
 func _physics_process(delta: float) -> void:
@@ -66,6 +70,7 @@ func _handle_input(delta: float) -> void:
 
 func _shoot() -> void:
 	_shoot_timer = shoot_cooldown
+	_play_shoot_sound()
 	
 	var projectile := Projectile.instantiate()
 	projectile.global_position = projectile_spawn.global_position
@@ -103,6 +108,47 @@ func heal(amount: int) -> void:
 func _die() -> void:
 	died.emit()
 	queue_free()
+
+
+func _setup_shoot_sound() -> void:
+	_shoot_sound = AudioStreamWAV.new()
+	_shoot_sound.mix_rate = 22050
+	_shoot_sound.format = AudioStreamWAV.FORMAT_8_BITS
+	_shoot_sound.stereo = false
+	
+	var duration := 0.08
+	var sample_count := int(duration * _shoot_sound.mix_rate)
+	var data := PackedByteArray()
+	data.resize(sample_count)
+	
+	var base_freq := 800.0
+	var end_freq := 200.0
+	var phase := 0.0
+	
+	for i in sample_count:
+		var t := float(i) / sample_count
+		var freq := lerpf(base_freq, end_freq, t * t)
+		phase += freq / _shoot_sound.mix_rate
+		
+		var envelope := (1.0 - t) * (1.0 - t)
+		var wave := sin(phase * TAU) * 0.6
+		wave += sin(phase * TAU * 2.0) * 0.2
+		wave += (randf() - 0.5) * 0.15 * envelope
+		
+		var sample := int((wave * envelope * 0.4 + 0.5) * 255.0)
+		data[i] = clampi(sample, 0, 255)
+	
+	_shoot_sound.data = data
+	
+	_shoot_sound_player = AudioStreamPlayer.new()
+	_shoot_sound_player.stream = _shoot_sound
+	_shoot_sound_player.volume_db = -12.0
+	add_child(_shoot_sound_player)
+
+
+func _play_shoot_sound() -> void:
+	if _shoot_sound_player:
+		_shoot_sound_player.play()
 
 
 func _setup_ship_geometry() -> void:
