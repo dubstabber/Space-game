@@ -112,37 +112,48 @@ func _die() -> void:
 
 func _setup_shoot_sound() -> void:
 	_shoot_sound = AudioStreamWAV.new()
-	_shoot_sound.mix_rate = 22050
+	_shoot_sound.mix_rate = 44100
 	_shoot_sound.format = AudioStreamWAV.FORMAT_8_BITS
 	_shoot_sound.stereo = false
 	
-	var duration := 0.08
+	var duration := 0.12
 	var sample_count := int(duration * _shoot_sound.mix_rate)
 	var data := PackedByteArray()
 	data.resize(sample_count)
 	
-	var base_freq := 800.0
-	var end_freq := 200.0
+	var base_freq := 350.0
+	var end_freq := 60.0
 	var phase := 0.0
 	
 	for i in sample_count:
 		var t := float(i) / sample_count
-		var freq := lerpf(base_freq, end_freq, t * t)
+		# Exponential frequency drop for a "zap"
+		var freq := lerpf(base_freq, end_freq, pow(t, 0.5))
 		phase += freq / _shoot_sound.mix_rate
 		
-		var envelope := (1.0 - t) * (1.0 - t)
-		var wave := sin(phase * TAU) * 0.6
-		wave += sin(phase * TAU * 2.0) * 0.2
-		wave += (randf() - 0.5) * 0.15 * envelope
+		# Sharper envelope
+		var envelope := exp(-t * 8.0)
 		
-		var sample := int((wave * envelope * 0.4 + 0.5) * 255.0)
+		# Base wave (sine with some saturation for grit)
+		var signal_val := sin(phase * TAU)
+		# Add some square-ish character
+		if signal_val > 0.5: signal_val = 0.8
+		elif signal_val < -0.5: signal_val = -0.8
+		
+		var wave := signal_val * 0.7
+		# Add a sub-oscillator for body
+		wave += sin(phase * TAU * 0.5) * 0.3
+		# Add slight noise for texture
+		wave += (randf() - 0.5) * 0.2 * envelope
+		
+		var sample := int((wave * envelope * 0.5 + 0.5) * 255.0)
 		data[i] = clampi(sample, 0, 255)
 	
 	_shoot_sound.data = data
 	
 	_shoot_sound_player = AudioStreamPlayer.new()
 	_shoot_sound_player.stream = _shoot_sound
-	_shoot_sound_player.volume_db = -12.0
+	_shoot_sound_player.volume_db = -40.0
 	add_child(_shoot_sound_player)
 
 

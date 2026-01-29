@@ -1,5 +1,7 @@
 extends Area2D
 
+const HitEffect = preload("res://scenes/entities/projectiles/hit_effect.tscn")
+
 @export var speed: float = 800.0
 @export var damage: int = 10
 @export var lifetime: float = 2.0
@@ -41,12 +43,21 @@ func set_owner_type(is_player: bool) -> void:
 func _on_body_entered(body: Node2D) -> void:
 	if body.has_method("take_damage"):
 		body.take_damage(damage)
+	_spawn_hit_effect()
 	queue_free()
 
 
 func _on_area_entered(area: Area2D) -> void:
 	if area.has_method("take_damage"):
 		area.take_damage(damage)
+	_spawn_hit_effect()
+	queue_free()
+
+
+func _spawn_hit_effect() -> void:
+	var effect := HitEffect.instantiate()
+	effect.global_position = global_position
+	get_tree().current_scene.add_child(effect)
 
 
 func _setup_geometry() -> void:
