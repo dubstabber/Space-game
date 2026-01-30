@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://dm5k8xqr2w7a3"]
+[gd_scene load_steps=15 format=3 uid="uid://dm5k8xqr2w7a3"]
 
 [ext_resource type="Script" uid="uid://bnpqofofsbqgm" path="res://scenes/world/world.gd" id="1_world"]
 [ext_resource type="PackedScene" uid="uid://cxl8v7qh3k6dm" path="res://scenes/environment/parallax_background.tscn" id="2_parallax"]
@@ -9,7 +9,11 @@
 [ext_resource type="PackedScene" uid="uid://cspawner12345" path="res://scenes/entities/asteroids/asteroid_spawner.tscn" id="5_spawner"]
 [ext_resource type="Resource" uid="uid://vh6m6gxnrab5" path="res://resources/factions/faction_syndicate.tres" id="6_j2gmx"]
 [ext_resource type="Resource" uid="uid://vh4w1gt3rab5" path="res://resources/factions/faction_raiders.tres" id="7_1yooq"]
+[ext_resource type="Resource" path="res://resources/enemies/enemy_fighter.tres" id="7_gb53w"]
 [ext_resource type="Resource" path="res://resources/enemies/enemy_heavy.tres" id="8_gb53w"]
+[ext_resource type="Script" uid="uid://4a1f0bw4brl2" path="res://scenes/entities/enemies/enemy_spawner.gd" id="10_umvgx"]
+[ext_resource type="Resource" uid="uid://c8d3hive00001" path="res://resources/factions/faction_hive.tres" id="11_mxkvs"]
+[ext_resource type="Resource" path="res://resources/enemies/enemy_scout.tres" id="12_m114p"]
 
 [node name="World" type="Node2D"]
 script = ExtResource("1_world")
@@ -23,12 +27,23 @@ position = Vector2(-882, -465)
 
 [node name="EnemySpawner" parent="Entities" instance=ExtResource("4_t5ptc")]
 position = Vector2(-1132, -395)
-allowed_factions = Array[ExtResource("5_j2gmx")]([ExtResource("6_j2gmx")])
-
-[node name="EnemySpawner2" parent="Entities" instance=ExtResource("4_t5ptc")]
 allowed_factions = Array[ExtResource("5_j2gmx")]([ExtResource("7_1yooq")])
 boss_enabled = true
+boss_data = ExtResource("7_gb53w")
+
+[node name="EnemySpawner2" parent="Entities" instance=ExtResource("4_t5ptc")]
+position = Vector2(-889, -288)
+allowed_factions = Array[ExtResource("5_j2gmx")]([ExtResource("6_j2gmx")])
+boss_enabled = true
 boss_data = ExtResource("8_gb53w")
+
+[node name="EnemySpawner3" type="Node2D" parent="Entities"]
+position = Vector2(-698, -620)
+script = ExtResource("10_umvgx")
+allowed_factions = Array[ExtResource("5_j2gmx")]([ExtResource("11_mxkvs")])
+boss_enabled = true
+boss_data = ExtResource("12_m114p")
+metadata/_custom_type_script = "uid://4a1f0bw4brl2"
 
 [node name="PlayerCamera" parent="." instance=ExtResource("4_camera")]
 

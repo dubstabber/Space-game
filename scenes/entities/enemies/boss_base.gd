@@ -117,12 +117,12 @@ func _setup_geometry() -> void:
 		details.width = 1.5
 	
 	if collision_shape and hull_points.size() > 0:
-		collision_shape.polygon = hull_points
+		collision_shape.set_deferred("polygon", hull_points)
 	
 	if hitbox and hitbox.has_node("CollisionPolygon2D"):
 		var hitbox_collision := hitbox.get_node("CollisionPolygon2D") as CollisionPolygon2D
 		if hitbox_collision and hull_points.size() > 0:
-			hitbox_collision.polygon = hull_points
+			hitbox_collision.set_deferred("polygon", hull_points)
 
 
 func _setup_phase_abilities() -> void:

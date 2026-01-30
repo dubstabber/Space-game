@@ -52,12 +52,18 @@ func _handle_debug_input() -> void:
 
 
 func _handle_input(delta: float) -> void:
-	var rotation_input := Input.get_axis("rotate_left", "rotate_right")
-	rotation += rotation_input * rotation_speed * delta
+	# Rotate ship to always face the mouse pointer; movement does not affect rotation.
+	var mouse_pos := get_global_mouse_position()
+	var to_mouse := mouse_pos - global_position
+	if to_mouse.length() > 0.001:
+		var target_rotation := to_mouse.angle() + PI / 2
+		var t: float = clampf(rotation_speed * delta, 0.0, 1.0)
+		rotation = lerp_angle(rotation, target_rotation, t)
 	
-	_is_thrusting = Input.is_action_pressed("thrust")
+	var input_dir := Input.get_vector("move_left", "move_right", "move_up", "move_down")
+	_is_thrusting = input_dir.length() > 0.0
 	if _is_thrusting:
-		var direction := Vector2.from_angle(rotation - PI / 2)
+		var direction := input_dir.normalized()
 		var current_accel := acceleration * (debug_speed_multiplier if _debug_boost_active else 1.0)
 		var current_max_speed := max_speed * (debug_speed_multiplier if _debug_boost_active else 1.0)
 		velocity += direction * current_accel * delta
