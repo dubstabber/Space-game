@@ -1,6 +1,6 @@
 extends Area2D
 
-const HitEffect = preload("res://scenes/entities/projectiles/hit_effect.tscn")
+const HitEffect = preload("uid://b7sr0xn6f2kke")
 
 @export var speed: float = 800.0
 @export var damage: int = 10
@@ -9,6 +9,7 @@ const HitEffect = preload("res://scenes/entities/projectiles/hit_effect.tscn")
 var _direction: Vector2 = Vector2.UP
 var _is_player_projectile: bool = true
 var _lifetime_timer: float = 0.0
+var _owner_faction_id: int = -1
 
 
 func _ready() -> void:
@@ -29,18 +30,21 @@ func _physics_process(delta: float) -> void:
 		queue_free()
 
 
-func set_owner_type(is_player: bool) -> void:
+func set_owner_type(is_player: bool, owner_faction_id: int = -1) -> void:
 	_is_player_projectile = is_player
+	_owner_faction_id = owner_faction_id
 	
 	if is_player:
 		collision_layer = 1 << 3
 		collision_mask = (1 << 1) | (1 << 2)
 	else:
 		collision_layer = 1 << 4
-		collision_mask = 1 << 0
+		collision_mask = (1 << 0) | (1 << 1)
 
 
 func _on_body_entered(body: Node2D) -> void:
+	if _is_same_faction(body):
+		return
 	if body.has_method("take_damage"):
 		body.take_damage(damage)
 	_spawn_hit_effect()
@@ -48,10 +52,23 @@ func _on_body_entered(body: Node2D) -> void:
 
 
 func _on_area_entered(area: Area2D) -> void:
+	var parent := area.get_parent()
+	if parent and _is_same_faction(parent):
+		return
 	if area.has_method("take_damage"):
 		area.take_damage(damage)
 	_spawn_hit_effect()
 	queue_free()
+
+
+func _is_same_faction(node: Node2D) -> bool:
+	if _is_player_projectile:
+		return false
+	if _owner_faction_id < 0:
+		return false
+	if not node.has_method("get_faction_id"):
+		return false
+	return node.get_faction_id() == _owner_faction_id
 
 
 func _spawn_hit_effect() -> void:

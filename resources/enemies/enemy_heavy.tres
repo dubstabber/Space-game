@@ -1,0 +1,28 @@
+[gd_resource type="Resource" script_class="EnemyData" load_steps=2 format=3 uid="uid://enemy_heavy_001"]
+
+[ext_resource type="Script" path="res://scripts/data/enemy_data.gd" id="1_enemy_data"]
+
+[resource]
+script = ExtResource("1_enemy_data")
+enemy_type = 2
+display_name = "Heavy"
+faction_id = 0
+max_health = 100
+move_speed = 80.0
+rotation_speed = 2.0
+collision_damage = 20
+attack_damage = 12
+attack_range = 500.0
+attack_cooldown = 0.8
+projectile_speed = 400.0
+ship_size = 30.0
+ship_style = 0
+detection_range = 700.0
+flee_health_percent = 0.0
+preferred_distance = 350.0
+strafe_enabled = false
+abilities = ["shield", "multi_shot"]
+xp_reward = 25
+credit_reward_min = 15
+credit_reward_max = 30
+drop_chance = 0.2

@@ -1,10 +1,15 @@
-[gd_scene load_steps=6 format=3 uid="uid://dm5k8xqr2w7a3"]
+[gd_scene load_steps=11 format=3 uid="uid://dm5k8xqr2w7a3"]
 
 [ext_resource type="Script" uid="uid://bnpqofofsbqgm" path="res://scenes/world/world.gd" id="1_world"]
 [ext_resource type="PackedScene" uid="uid://cxl8v7qh3k6dm" path="res://scenes/environment/parallax_background.tscn" id="2_parallax"]
 [ext_resource type="PackedScene" uid="uid://dp8k3nxq2w7fm" path="res://scenes/player/player_ship.tscn" id="3_player"]
 [ext_resource type="PackedScene" uid="uid://bk7r3m5v2wxqp" path="res://scenes/player/player_camera.tscn" id="4_camera"]
+[ext_resource type="PackedScene" path="res://scenes/entities/enemies/enemy_spawner.tscn" id="4_t5ptc"]
+[ext_resource type="Script" uid="uid://ba1ao2pjdhpk2" path="res://scripts/data/faction_data.gd" id="5_j2gmx"]
 [ext_resource type="PackedScene" uid="uid://cspawner12345" path="res://scenes/entities/asteroids/asteroid_spawner.tscn" id="5_spawner"]
+[ext_resource type="Resource" uid="uid://vh6m6gxnrab5" path="res://resources/factions/faction_syndicate.tres" id="6_j2gmx"]
+[ext_resource type="Resource" uid="uid://vh4w1gt3rab5" path="res://resources/factions/faction_raiders.tres" id="7_1yooq"]
+[ext_resource type="Resource" path="res://resources/enemies/enemy_heavy.tres" id="8_gb53w"]
 
 [node name="World" type="Node2D"]
 script = ExtResource("1_world")
@@ -15,6 +20,15 @@ script = ExtResource("1_world")
 
 [node name="Player" parent="Entities" instance=ExtResource("3_player")]
 position = Vector2(-882, -465)
+
+[node name="EnemySpawner" parent="Entities" instance=ExtResource("4_t5ptc")]
+position = Vector2(-1132, -395)
+allowed_factions = Array[ExtResource("5_j2gmx")]([ExtResource("6_j2gmx")])
+
+[node name="EnemySpawner2" parent="Entities" instance=ExtResource("4_t5ptc")]
+allowed_factions = Array[ExtResource("5_j2gmx")]([ExtResource("7_1yooq")])
+boss_enabled = true
+boss_data = ExtResource("8_gb53w")
 
 [node name="PlayerCamera" parent="." instance=ExtResource("4_camera")]
 

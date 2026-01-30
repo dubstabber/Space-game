@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="FactionData" load_steps=2 format=3 uid="uid://vh6m6gxnrab5"]
+
+[ext_resource type="Script" path="res://scripts/data/faction_data.gd" id="1_faction"]
+
+[resource]
+script = ExtResource("1_faction")
+faction_id = 1
+faction_name = "Syndicate"
+description = "Organized crime network with disciplined tactics. Well-equipped and coordinated."
+primary_color = Color(0.2, 0.1, 0.5, 1)
+secondary_color = Color(0.4, 0.2, 0.6, 1)
+glow_color = Color(0.6, 0.3, 1, 1)
+aggression_level = 1.0
+coordination_level = 1.5
+preferred_range = 350.0
+health_multiplier = 1.1
+damage_multiplier = 1.0
+speed_multiplier = 1.0
+min_group_size = 2
+max_group_size = 4
+spawn_weight = 0.8

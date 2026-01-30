@@ -31,6 +31,7 @@ const Projectile = preload("res://scenes/entities/projectiles/projectile.tscn")
 
 
 func _ready() -> void:
+	add_to_group("player")
 	current_health = max_health
 	_setup_ship_geometry()
 	_setup_shoot_sound()

@@ -1,0 +1,28 @@
+[gd_resource type="Resource" script_class="EnemyData" load_steps=2 format=3 uid="uid://enemy_fighter_01"]
+
+[ext_resource type="Script" path="res://scripts/data/enemy_data.gd" id="1_enemy_data"]
+
+[resource]
+script = ExtResource("1_enemy_data")
+enemy_type = 1
+display_name = "Fighter"
+faction_id = 0
+max_health = 50
+move_speed = 150.0
+rotation_speed = 3.0
+collision_damage = 10
+attack_damage = 8
+attack_range = 400.0
+attack_cooldown = 1.0
+projectile_speed = 500.0
+ship_size = 20.0
+ship_style = 0
+detection_range = 600.0
+flee_health_percent = 0.0
+preferred_distance = 250.0
+strafe_enabled = true
+abilities = ["dash"]
+xp_reward = 10
+credit_reward_min = 5
+credit_reward_max = 15
+drop_chance = 0.1

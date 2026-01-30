@@ -1,0 +1,28 @@
+[gd_resource type="Resource" script_class="EnemyData" load_steps=2 format=3 uid="uid://enemy_scout_001"]
+
+[ext_resource type="Script" path="res://scripts/data/enemy_data.gd" id="1_enemy_data"]
+
+[resource]
+script = ExtResource("1_enemy_data")
+enemy_type = 0
+display_name = "Scout"
+faction_id = 0
+max_health = 30
+move_speed = 200.0
+rotation_speed = 4.0
+collision_damage = 5
+attack_damage = 5
+attack_range = 350.0
+attack_cooldown = 1.5
+projectile_speed = 600.0
+ship_size = 15.0
+ship_style = 0
+detection_range = 500.0
+flee_health_percent = 0.2
+preferred_distance = 300.0
+strafe_enabled = false
+abilities = []
+xp_reward = 5
+credit_reward_min = 3
+credit_reward_max = 8
+drop_chance = 0.05
