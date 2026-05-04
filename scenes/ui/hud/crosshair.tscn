@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://cmx42jrx3l1ec"]
+
+[ext_resource type="Script" uid="uid://b7n5v8w3xjs37" path="res://scenes/ui/hud/crosshair.gd" id="1_crosshair"]
+
+[node name="Crosshair" type="Control" unique_id=13220319]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_crosshair")
+radius = 5.0
+dot_radius = 0.8
+line_width = 0.7
