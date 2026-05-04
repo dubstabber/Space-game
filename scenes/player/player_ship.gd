@@ -23,19 +23,24 @@ var _is_thrusting: bool = false
 @onready var engine_glow: Polygon2D = $EngineGlow
 @onready var collision_shape: CollisionPolygon2D = $CollisionShape
 @onready var projectile_spawn: Marker2D = $ProjectileSpawn
+@onready var health_bar: Node2D = $HealthBar
+@onready var health_bar_fill: Line2D = $HealthBar/HealthFill
+@onready var health_bar_lost: Line2D = $HealthBar/HealthLost
 
 var _shoot_sound_player: AudioStreamPlayer
 var _shoot_sound: AudioStreamWAV
 
 const Projectile = preload("res://scenes/entities/projectiles/projectile.tscn")
-
+const HEALTH_BAR_HALF_WIDTH := 15.0
+const HEALTH_BAR_OFFSET := Vector2(0, -20)
 
 func _ready() -> void:
 	add_to_group("player")
 	current_health = max_health
 	_setup_ship_geometry()
 	_setup_shoot_sound()
-
+	health_changed.connect(_on_health_changed)
+	_update_health_bar(current_health, max_health)
 
 func _physics_process(delta: float) -> void:
 	_handle_debug_input()
@@ -43,13 +48,12 @@ func _physics_process(delta: float) -> void:
 	_update_shoot_timer(delta)
 	_update_engine_glow()
 	move_and_slide()
-
+	_update_health_bar_transform()
 
 func _handle_debug_input() -> void:
 	if Input.is_action_just_pressed("debug_speed_boost"):
 		_debug_boost_active = not _debug_boost_active
 		print("[DEBUG] Speed boost: ", "ON (x%s)" % debug_speed_multiplier if _debug_boost_active else "OFF")
-
 
 func _handle_input(delta: float) -> void:
 	# Rotate ship to always face the mouse pointer; movement does not affect rotation.
@@ -74,7 +78,6 @@ func _handle_input(delta: float) -> void:
 	if Input.is_action_pressed("shoot") and _shoot_timer <= 0:
 		_shoot()
 
-
 func _shoot() -> void:
 	_shoot_timer = shoot_cooldown
 	_play_shoot_sound()
@@ -85,11 +88,9 @@ func _shoot() -> void:
 	projectile.set_owner_type(true)
 	get_tree().current_scene.add_child(projectile)
 
-
 func _update_shoot_timer(delta: float) -> void:
 	if _shoot_timer > 0:
 		_shoot_timer -= delta
-
 
 func _update_engine_glow() -> void:
 	if engine_glow:
@@ -98,6 +99,11 @@ func _update_engine_glow() -> void:
 			var flicker := randf_range(0.7, 1.0)
 			engine_glow.modulate.a = flicker
 
+func _update_health_bar_transform() -> void:
+	if not health_bar:
+		return
+	health_bar.global_position = global_position + HEALTH_BAR_OFFSET
+	health_bar.global_rotation = 0.0
 
 func take_damage(amount: int) -> void:
 	current_health = maxi(0, current_health - amount)
@@ -106,16 +112,32 @@ func take_damage(amount: int) -> void:
 	if current_health <= 0:
 		_die()
 
-
 func heal(amount: int) -> void:
 	current_health = mini(max_health, current_health + amount)
 	health_changed.emit(current_health, max_health)
-
 
 func _die() -> void:
 	died.emit()
 	queue_free()
 
+func _on_health_changed(new_health: int, max_value: int) -> void:
+	_update_health_bar(new_health, max_value)
+
+func _update_health_bar(current: int, maximum: int) -> void:
+	if not health_bar or not health_bar_fill or not health_bar_lost:
+		return
+	var ratio := 0.0
+	if maximum > 0:
+		ratio = clampf(float(current) / float(maximum), 0.0, 1.0)
+	var full_start := Vector2(-HEALTH_BAR_HALF_WIDTH, 0.0)
+	var full_end := Vector2(HEALTH_BAR_HALF_WIDTH, 0.0)
+	var current_end := Vector2(
+		full_start.x + (full_end.x - full_start.x) * ratio,
+		0.0
+	)
+	health_bar_fill.points = PackedVector2Array([full_start, current_end])
+	health_bar_lost.points = PackedVector2Array([current_end, full_end])
+	health_bar.visible = maximum > 0
 
 func _setup_shoot_sound() -> void:
 	_shoot_sound = AudioStreamWAV.new()
