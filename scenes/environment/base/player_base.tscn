@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=3 uid="uid://player_base_0001"]
+
+[ext_resource type="Script" path="res://scenes/environment/base/player_base.gd" id="1_base"]
+
+[node name="PlayerBase" type="Area2D" groups=["base"]]
+collision_layer = 128
+collision_mask = 1
+script = ExtResource("1_base")
+
+[node name="Hull" type="Polygon2D" parent="."]
+
+[node name="DockRing" type="Line2D" parent="."]
+
+[node name="Core" type="Polygon2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]

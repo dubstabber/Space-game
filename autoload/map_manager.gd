@@ -153,7 +153,6 @@ func get_current_map() -> MapData:
 		current_map_data = get_map_data(current_map_id)
 	return current_map_data
 
-
 func set_initial_map(map_id: String) -> void:
 	if not _maps.has(map_id):
 		push_warning("[MapManager] Initial map not found: ", map_id, ", using default")
@@ -161,6 +160,7 @@ func set_initial_map(map_id: String) -> void:
 	
 	current_map_id = map_id
 	current_map_data = _maps[map_id]
+	map_changed.emit(map_id)
 	print("[MapManager] Initial map set to: ", map_id)
 
 

@@ -1,47 +1,47 @@
-[gd_scene load_steps=2 format=3 uid="uid://dp8k3nxq2w7fm"]
+[gd_scene format=3 uid="uid://dp8k3nxq2w7fm"]
 
 [ext_resource type="Script" uid="uid://b1iu7ai3xkb5o" path="res://scenes/player/player_ship.gd" id="1_player"]
 
-[node name="PlayerShip" type="CharacterBody2D" groups=["player"]]
-collision_layer = 1
+[node name="PlayerShip" type="CharacterBody2D" unique_id=94062061 groups=["player"]]
 collision_mask = 14
 script = ExtResource("1_player")
+max_health = 20
 shoot_cooldown = 0.35
 
-[node name="ShipBody" type="Polygon2D" parent="."]
+[node name="ShipBody" type="Polygon2D" parent="." unique_id=1650279210]
 color = Color(0.15, 0.2, 0.3, 1)
 polygon = PackedVector2Array(0, -20, 12, 15, 6, 10, -6, 10, -12, 15)
 
-[node name="ShipOutline" type="Line2D" parent="."]
+[node name="ShipOutline" type="Line2D" parent="." unique_id=164576653]
 points = PackedVector2Array(0, -20, 12, 15, 6, 10, -6, 10, -12, 15, 0, -20)
 width = 2.0
 default_color = Color(0.4, 0.6, 0.9, 1)
 
-[node name="EngineGlow" type="Polygon2D" parent="."]
+[node name="EngineGlow" type="Polygon2D" parent="." unique_id=680101315]
 visible = false
 color = Color(1, 0.6, 0.2, 0.9)
 polygon = PackedVector2Array(-4, 10, 0, 22, 4, 10)
 
-[node name="CollisionShape" type="CollisionPolygon2D" parent="."]
+[node name="CollisionShape" type="CollisionPolygon2D" parent="." unique_id=692808523]
 polygon = PackedVector2Array(0, -20, 12, 15, 6, 10, -6, 10, -12, 15)
 
-[node name="ProjectileSpawn" type="Marker2D" parent="."]
+[node name="ProjectileSpawn" type="Marker2D" parent="." unique_id=443997160]
 position = Vector2(0, -25)
 
-[node name="HealthBar" type="Node2D" parent="."]
+[node name="HealthBar" type="Node2D" parent="." unique_id=512248161]
 position = Vector2(0, -30)
 
-[node name="HealthBackground" type="Line2D" parent="HealthBar"]
+[node name="HealthBackground" type="Line2D" parent="HealthBar" unique_id=1206294921]
 points = PackedVector2Array(-15, 0, 15, 0)
 width = 3.0
 default_color = Color(0.05, 0.05, 0.05, 0.8)
 
-[node name="HealthLost" type="Line2D" parent="HealthBar"]
+[node name="HealthLost" type="Line2D" parent="HealthBar" unique_id=2084474333]
 points = PackedVector2Array(-15, 0, 15, 0)
 width = 3.0
-default_color = Color(1.0, 0.2, 0.2, 1.0)
+default_color = Color(1, 0.2, 0.2, 1)
 
-[node name="HealthFill" type="Line2D" parent="HealthBar"]
+[node name="HealthFill" type="Line2D" parent="HealthBar" unique_id=1424252156]
 points = PackedVector2Array(-15, 0, 15, 0)
 width = 3.0
-default_color = Color(0.2, 1.0, 0.2, 1.0)
+default_color = Color(0.2, 1, 0.2, 1)

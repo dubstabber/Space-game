@@ -5,7 +5,7 @@ extends Node
 
 
 func _ready() -> void:
-	MapManager.set_initial_map(MapManager.DEFAULT_MAP)
+	MapManager.set_initial_map("home_base")
 	
 	if world and minimap:
 		world.set_minimap(minimap)

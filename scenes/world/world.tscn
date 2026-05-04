@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://dm5k8xqr2w7a3"]
+[gd_scene load_steps=17 format=3 uid="uid://dm5k8xqr2w7a3"]
 
 [ext_resource type="Script" uid="uid://bnpqofofsbqgm" path="res://scenes/world/world.gd" id="1_world"]
 [ext_resource type="PackedScene" uid="uid://cxl8v7qh3k6dm" path="res://scenes/environment/parallax_background.tscn" id="2_parallax"]
@@ -14,6 +14,8 @@
 [ext_resource type="Script" uid="uid://4a1f0bw4brl2" path="res://scenes/entities/enemies/enemy_spawner.gd" id="10_umvgx"]
 [ext_resource type="Resource" uid="uid://c8d3hive00001" path="res://resources/factions/faction_hive.tres" id="11_mxkvs"]
 [ext_resource type="Resource" path="res://resources/enemies/enemy_scout.tres" id="12_m114p"]
+[ext_resource type="PackedScene" path="res://scenes/environment/base/player_base.tscn" id="13_base"]
+[ext_resource type="Script" path="res://scenes/world/enemy_spawn_controller.gd" id="14_spawn_controller"]
 
 [node name="World" type="Node2D"]
 script = ExtResource("1_world")
@@ -45,6 +47,9 @@ boss_enabled = true
 boss_data = ExtResource("12_m114p")
 metadata/_custom_type_script = "uid://4a1f0bw4brl2"
 
+[node name="EnemySpawnController" type="Node" parent="Entities"]
+script = ExtResource("14_spawn_controller")
+
 [node name="PlayerCamera" parent="." instance=ExtResource("4_camera")]
 
 [node name="AsteroidSpawner" parent="." instance=ExtResource("5_spawner")]
@@ -53,3 +58,5 @@ density_multiplier = 0.1
 [node name="Portals" type="Node2D" parent="."]
 
 [node name="Environment" type="Node2D" parent="."]
+
+[node name="PlayerBase" parent="Environment" instance=ExtResource("13_base")]

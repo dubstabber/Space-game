@@ -91,7 +91,7 @@ func _setup_current_map() -> void:
 			_arrival_from_map = ""
 			_arrival_to_map = ""
 		
-		if not placed and _current_map_data.player_spawn_position != Vector2.ZERO:
+		if not placed:
 			player.global_position = _current_map_data.player_spawn_position
 
 
@@ -175,4 +175,4 @@ func set_minimap(minimap: Control) -> void:
 	if asteroid_spawner:
 		asteroid_spawner.set_world_bounds(_world_map_size)
 	
-	_spawn_portals()
+	_setup_current_map()

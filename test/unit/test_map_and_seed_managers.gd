@@ -46,10 +46,12 @@ func test_map_lookup_falls_back_to_default_map() -> void:
 
 
 func test_initial_map_falls_back_when_unknown() -> void:
+	watch_signals(_map_manager)
 	_map_manager.set_initial_map("not_real")
 
 	assert_eq(_map_manager.current_map_id, "default_space")
 	assert_eq(_map_manager.current_map_data.map_id, "default_space")
+	assert_signal_emitted(_map_manager, "map_changed")
 
 
 func test_teleport_to_valid_map_updates_state_and_signals() -> void:

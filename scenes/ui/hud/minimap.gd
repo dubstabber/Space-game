@@ -32,7 +32,6 @@ enum PortalPosition {
 var _player: Node2D = null
 var _portal_world_positions: Array[Vector2] = []
 var _world_map_size: Vector2 = Vector2(40000, 40000)
-
 func _ready() -> void:
 	custom_minimum_size = map_size
 	size = map_size
@@ -47,10 +46,8 @@ func _ready() -> void:
 	offset_right = map_margin.x + map_size.x
 	offset_bottom = - map_margin.y
 
-
 func _process(_delta: float) -> void:
 	queue_redraw()
-
 
 func _draw() -> void:
 	_draw_background()
@@ -58,10 +55,8 @@ func _draw() -> void:
 	_draw_portals()
 	_draw_player()
 
-
 func _draw_background() -> void:
 	draw_rect(Rect2(Vector2.ZERO, map_size), background_color)
-
 
 func _draw_border() -> void:
 	var half_border := border_width / 2.0
@@ -73,7 +68,6 @@ func _draw_border() -> void:
 		Vector2(half_border, half_border)
 	]
 	draw_polyline(points, border_color, border_width)
-
 
 func _draw_player() -> void:
 	if _player == null:
@@ -133,6 +127,13 @@ func _get_edge_position(direction: Vector2) -> Vector2:
 
 
 func _draw_portals() -> void:
+	var map_data := MapManager.get_current_map()
+	if map_data != null and map_data.has_safe_zone:
+		var base_pos := _world_to_map(Vector2.ZERO)
+		var base_size := portal_icon_size * 1.4
+		var base_color := Color(0.3, 0.95, 0.65, 0.95)
+		draw_rect(Rect2(base_pos - Vector2(base_size, base_size), Vector2(base_size * 2.0, base_size * 2.0)), base_color, false, 2.0)
+		draw_circle(base_pos, base_size * 0.45, base_color.darkened(0.25))
 	for i in range(_portal_world_positions.size()):
 		var world_pos := _portal_world_positions[i]
 		var portal_map_pos := _world_to_map(world_pos)
@@ -140,18 +141,12 @@ func _draw_portals() -> void:
 
 
 func _draw_portal_icon(pos: Vector2) -> void:
-	# Draw portal similar to world portal with concentric rings
 	var outer_radius := portal_icon_size
 	var inner_radius := portal_icon_size * 0.6
 	var center_radius := portal_icon_size * 0.3
 	
-	# Draw outer ring
 	draw_circle(pos, outer_radius, portal_color.lightened(0.2), false, 2.0)
-	
-	# Draw inner ring  
 	draw_circle(pos, inner_radius, portal_color, false, 1.5)
-	
-	# Draw center glow
 	draw_circle(pos, center_radius, portal_color.darkened(0.3))
 
 

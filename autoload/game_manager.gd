@@ -17,15 +17,12 @@ enum GameState {
 var current_state: GameState = GameState.MENU
 var _previous_state: GameState = GameState.MENU
 
-
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
-
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("pause") and current_state in [GameState.PLAYING, GameState.PAUSED]:
 		toggle_pause()
-
 
 func change_state(new_state: GameState) -> void:
 	if new_state == current_state:
@@ -50,9 +47,9 @@ func toggle_pause() -> void:
 	elif current_state == GameState.PLAYING:
 		change_state(GameState.PAUSED)
 
-
-func start_new_game(initial_map_id: String = "default_space") -> void:
+func start_new_game(initial_map_id: String = "home_base") -> void:
 	SeedManager.initialize_new_game()
+	ResourceManager.reset()
 	MapManager.set_initial_map(initial_map_id)
 	change_state(GameState.PLAYING)
 	new_game_started.emit()
@@ -110,6 +107,7 @@ func get_full_save_data() -> Dictionary:
 	return {
 		"seed_data": SeedManager.get_save_data(),
 		"map_data": MapManager.get_save_data(),
+		"economy_data": ResourceManager.get_save_data(),
 		"game_state": {
 			"current_state": current_state
 		}
@@ -126,3 +124,5 @@ func load_full_save_data(data: Dictionary) -> void:
 	
 	if data.has("map_data"):
 		MapManager.load_save_data(data.map_data)
+	if data.has("economy_data"):
+		ResourceManager.load_save_data(data.economy_data)
