@@ -1,0 +1,212 @@
+{
+	"res://autoload/game_manager.gd": {
+		"lines": 129,
+		"functions": 15,
+		"max_function_lines": 13
+	},
+	"res://autoload/map_manager.gd": {
+		"lines": 219,
+		"functions": 18,
+		"max_function_lines": 31
+	},
+	"res://autoload/universe_manager.gd": {
+		"lines": 106,
+		"functions": 7,
+		"max_function_lines": 28
+	},
+	"res://autoload/seed_manager.gd": {
+		"lines": 125,
+		"functions": 15,
+		"max_function_lines": 15
+	},
+	"res://scenes/main/main.gd": {
+		"lines": 12,
+		"functions": 1,
+		"max_function_lines": 4
+	},
+	"res://scenes/ui/hud/fps_counter.gd": {
+		"lines": 23,
+		"functions": 2,
+		"max_function_lines": 8
+	},
+	"res://scenes/ui/hud/crosshair.gd": {
+		"lines": 34,
+		"functions": 4,
+		"max_function_lines": 7
+	},
+	"res://scenes/ui/hud/minimap.gd": {
+		"lines": 213,
+		"functions": 15,
+		"max_function_lines": 24
+	},
+	"res://scenes/environment/dust_field.gd": {
+		"lines": 33,
+		"functions": 3,
+		"max_function_lines": 12
+	},
+	"res://scenes/environment/chunked_dust_field.gd": {
+		"lines": 193,
+		"functions": 10,
+		"max_function_lines": 32
+	},
+	"res://scenes/environment/chunked_star_field.gd": {
+		"lines": 168,
+		"functions": 10,
+		"max_function_lines": 26
+	},
+	"res://scenes/environment/parallax_background.gd": {
+		"lines": 217,
+		"functions": 16,
+		"max_function_lines": 27
+	},
+	"res://scenes/environment/nebula_field.gd": {
+		"lines": 249,
+		"functions": 15,
+		"max_function_lines": 33
+	},
+	"res://scenes/environment/portals/universe_portal.gd": {
+		"lines": 180,
+		"functions": 13,
+		"max_function_lines": 20
+	},
+	"res://scenes/environment/galaxy_field.gd": {
+		"lines": 331,
+		"functions": 14,
+		"max_function_lines": 66
+	},
+	"res://scenes/environment/shader_galaxy_field.gd": {
+		"lines": 189,
+		"functions": 8,
+		"max_function_lines": 35
+	},
+	"res://scenes/player/player_camera.gd": {
+		"lines": 34,
+		"functions": 3,
+		"max_function_lines": 10
+	},
+	"res://scenes/player/player_ship.gd": {
+		"lines": 234,
+		"functions": 16,
+		"max_function_lines": 34
+	},
+	"res://scenes/entities/projectiles/hit_effect.gd": {
+		"lines": 11,
+		"functions": 2,
+		"max_function_lines": 3
+	},
+	"res://scenes/entities/projectiles/projectile.gd": {
+		"lines": 93,
+		"functions": 8,
+		"max_function_lines": 12
+	},
+	"res://scenes/entities/pickups/resource_pickup.gd": {
+		"lines": 104,
+		"functions": 8,
+		"max_function_lines": 20
+	},
+	"res://scenes/entities/enemies/enemy_spawner.gd": {
+		"lines": 253,
+		"functions": 19,
+		"max_function_lines": 20
+	},
+	"res://scenes/entities/enemies/boss_base.gd": {
+		"lines": 462,
+		"functions": 31,
+		"max_function_lines": 27
+	},
+	"res://scenes/entities/enemies/abilities/ability_shield.gd": {
+		"lines": 71,
+		"functions": 7,
+		"max_function_lines": 10
+	},
+	"res://scenes/entities/enemies/abilities/ability_dash.gd": {
+		"lines": 71,
+		"functions": 7,
+		"max_function_lines": 9
+	},
+	"res://scenes/entities/enemies/abilities/ability_base.gd": {
+		"lines": 88,
+		"functions": 10,
+		"max_function_lines": 10
+	},
+	"res://scenes/entities/enemies/abilities/shield_visual.gd": {
+		"lines": 30,
+		"functions": 2,
+		"max_function_lines": 12
+	},
+	"res://scenes/entities/enemies/abilities/dash_trail.gd": {
+		"lines": 25,
+		"functions": 3,
+		"max_function_lines": 6
+	},
+	"res://scenes/entities/enemies/abilities/ability_multi_shot.gd": {
+		"lines": 55,
+		"functions": 4,
+		"max_function_lines": 13
+	},
+	"res://scenes/entities/enemies/enemy_base.gd": {
+		"lines": 425,
+		"functions": 28,
+		"max_function_lines": 39
+	},
+	"res://scenes/entities/asteroids/asteroid_spawner.gd": {
+		"lines": 203,
+		"functions": 18,
+		"max_function_lines": 17
+	},
+	"res://scenes/entities/asteroids/asteroid.gd": {
+		"lines": 196,
+		"functions": 11,
+		"max_function_lines": 30
+	},
+	"res://scenes/world/world.gd": {
+		"lines": 179,
+		"functions": 9,
+		"max_function_lines": 34
+	},
+	"res://scripts/data/resource_data.gd": {
+		"lines": 90,
+		"functions": 0,
+		"max_function_lines": 0
+	},
+	"res://scripts/data/enemy_data.gd": {
+		"lines": 59,
+		"functions": 0,
+		"max_function_lines": 0
+	},
+	"res://scripts/data/universe_data.gd": {
+		"lines": 13,
+		"functions": 0,
+		"max_function_lines": 0
+	},
+	"res://scripts/data/faction_data.gd": {
+		"lines": 45,
+		"functions": 0,
+		"max_function_lines": 0
+	},
+	"res://scripts/data/map_data.gd": {
+		"lines": 172,
+		"functions": 0,
+		"max_function_lines": 0
+	},
+	"res://scripts/data/parallax_layer_config.gd": {
+		"lines": 129,
+		"functions": 0,
+		"max_function_lines": 0
+	},
+	"res://scripts/geometry/enemy_geometry.gd": {
+		"lines": 186,
+		"functions": 0,
+		"max_function_lines": 0
+	},
+	"res://scripts/geometry/asteroid_geometry.gd": {
+		"lines": 74,
+		"functions": 0,
+		"max_function_lines": 0
+	},
+	"res://scripts/components/health_component.gd": {
+		"lines": 65,
+		"functions": 7,
+		"max_function_lines": 9
+	}
+}

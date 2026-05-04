@@ -111,7 +111,7 @@ static func generate_hive_shape(size: float, enemy_type: EnemyData.EnemyType, st
 		points.append(Vector2(cos(angle) * radius, sin(angle) * radius))
 	
 	var detail_points := PackedVector2Array()
-	var inner_segments := segments / 2 + 1
+	var inner_segments := int(float(segments) / 2.0) + 1
 	for i in range(inner_segments):
 		var angle := (TAU / inner_segments) * i - PI / 2
 		var radius := s * 0.4

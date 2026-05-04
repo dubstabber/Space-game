@@ -203,7 +203,7 @@ func _update_state(delta: float) -> void:
 				_special_timer = 5.0 / current_phase
 
 
-func _update_behavior(delta: float) -> void:
+func _update_behavior(_delta: float) -> void:
 	if not enemy_data or not faction_data:
 		return
 	

@@ -29,7 +29,7 @@ func _on_activate() -> void:
 	var base_angle := base_direction.angle()
 	
 	var start_angle := base_angle - spread_angle / 2
-	var angle_step = spread_angle / (projectile_count - 1) if projectile_count > 1 else 0
+	var angle_step := spread_angle / float(projectile_count - 1) if projectile_count > 1 else 0.0
 	
 	for i in range(projectile_count):
 		var angle = start_angle + angle_step * i

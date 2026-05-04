@@ -220,7 +220,7 @@ func _check_flee_condition() -> void:
 			current_state = AIState.FLEE
 
 
-func _update_behavior(delta: float) -> void:
+func _update_behavior(_delta: float) -> void:
 	if not enemy_data or not faction_data:
 		return
 	

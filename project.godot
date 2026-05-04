@@ -26,6 +26,10 @@ SeedManager="*res://autoload/seed_manager.gd"
 MapManager="*res://autoload/map_manager.gd"
 UniverseManager="*res://autoload/universe_manager.gd"
 
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/gut/plugin.cfg")
+
 [input]
 
 pause={
