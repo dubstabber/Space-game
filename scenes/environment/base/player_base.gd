@@ -12,6 +12,7 @@ var _active: bool = false
 @onready var core: Polygon2D = $Core
 @onready var collision_shape: CollisionShape2D = $CollisionShape2D
 
+const Minimap := preload("res://scenes/ui/hud/minimap.gd")
 
 func _ready() -> void:
 	body_entered.connect(_on_body_entered)
@@ -66,6 +67,18 @@ func _apply_map_state() -> void:
 	_active = map_data != null and map_data.has_safe_zone
 	visible = _active
 	monitoring = _active
+	if _active:
+		var rng := RandomNumberGenerator.new()
+		rng.seed = SeedManager.get_entity_seed(MapManager.current_map_id, "portals", 0)
+		var slots := Minimap.get_random_portal_slots(map_data.connected_map_ids.size(), rng)
+		if not slots.is_empty():
+			var portal_slot: int = slots[0]
+			var half_world := map_data.world_map_size / 2.0
+			var padded_half := half_world * 0.85
+			var col := portal_slot % 3
+			var row := portal_slot / 3
+			global_position = -Vector2(-padded_half.x + padded_half.x * col, -padded_half.y + padded_half.y * row)
+			map_data.player_spawn_position = global_position
 	if collision_shape:
 		collision_shape.disabled = not _active
 	if not _active:

@@ -129,7 +129,7 @@ func _get_edge_position(direction: Vector2) -> Vector2:
 func _draw_portals() -> void:
 	var map_data := MapManager.get_current_map()
 	if map_data != null and map_data.has_safe_zone:
-		var base_pos := _world_to_map(Vector2.ZERO)
+		var base_pos := _world_to_map(map_data.player_spawn_position)
 		var base_size := portal_icon_size * 1.4
 		var base_color := Color(0.3, 0.95, 0.65, 0.95)
 		draw_rect(Rect2(base_pos - Vector2(base_size, base_size), Vector2(base_size * 2.0, base_size * 2.0)), base_color, false, 2.0)
@@ -185,7 +185,6 @@ static func get_random_portal_slots(count: int, rng: RandomNumberGenerator) -> A
 		PortalPosition.TOP_MIDDLE,
 		PortalPosition.TOP_RIGHT,
 		PortalPosition.MIDDLE_LEFT,
-		PortalPosition.MIDDLE,
 		PortalPosition.MIDDLE_RIGHT,
 		PortalPosition.BOTTOM_LEFT,
 		PortalPosition.BOTTOM_MIDDLE,
