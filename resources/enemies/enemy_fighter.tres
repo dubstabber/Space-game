@@ -23,6 +23,4 @@ preferred_distance = 250.0
 strafe_enabled = true
 abilities = ["dash"]
 xp_reward = 10
-credit_reward_min = 5
-credit_reward_max = 15
 drop_chance = 0.1

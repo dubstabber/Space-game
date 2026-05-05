@@ -146,7 +146,7 @@ func _get_world_position_for_slot(slot: int) -> Vector2:
 	var padded_half := half_world * (1.0 - padding_ratio)
 	
 	var col := slot % 3
-	var row := slot / 3
+	var row := int(floor(float(slot) / 3.0))
 	
 	var x := -padded_half.x + padded_half.x * col
 	var y := -padded_half.y + padded_half.y * row

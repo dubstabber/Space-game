@@ -26,6 +26,7 @@ SeedManager="*res://autoload/seed_manager.gd"
 MapManager="*res://autoload/map_manager.gd"
 UniverseManager="*res://autoload/universe_manager.gd"
 ResourceManager="*res://autoload/resource_manager.gd"
+MarketManager="*res://autoload/market_manager.gd"
 
 [editor_plugins]
 

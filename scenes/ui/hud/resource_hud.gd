@@ -13,7 +13,6 @@ const RESOURCE_TYPES := [
 
 
 func _ready() -> void:
-	ResourceManager.credits_changed.connect(_on_inventory_changed)
 	ResourceManager.inventory_changed.connect(_on_inventory_changed)
 	_update_text()
 
@@ -23,9 +22,9 @@ func _on_inventory_changed(_value = null) -> void:
 
 
 func _update_text() -> void:
-	var parts: Array[String] = ["Credits: %d" % ResourceManager.credits]
+	var parts: Array[String] = []
 	for resource_type in RESOURCE_TYPES:
 		var amount := ResourceManager.get_resource_amount(resource_type)
 		if amount > 0:
 			parts.append("%s: %d" % [ResourceData.get_type_name(resource_type).capitalize(), amount])
-	label.text = "  ".join(parts)
+	label.text = "Resources: none" if parts.is_empty() else "  ".join(parts)

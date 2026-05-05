@@ -40,7 +40,6 @@ func change_state(new_state: GameState) -> void:
 			get_tree().paused = false
 			game_resumed.emit()
 
-
 func toggle_pause() -> void:
 	if current_state == GameState.PAUSED:
 		change_state(_previous_state)
@@ -50,18 +49,17 @@ func toggle_pause() -> void:
 func start_new_game(initial_map_id: String = "home_base") -> void:
 	SeedManager.initialize_new_game()
 	ResourceManager.reset()
+	MarketManager.reset()
 	MapManager.set_initial_map(initial_map_id)
 	change_state(GameState.PLAYING)
 	new_game_started.emit()
 	print("[GameManager] New game started on map: ", initial_map_id)
-
 
 func start_game() -> void:
 	if not SeedManager.is_initialized():
 		start_new_game()
 	else:
 		change_state(GameState.PLAYING)
-
 
 func load_game() -> bool:
 	if not SeedManager.load_from_file():
@@ -108,6 +106,7 @@ func get_full_save_data() -> Dictionary:
 		"seed_data": SeedManager.get_save_data(),
 		"map_data": MapManager.get_save_data(),
 		"economy_data": ResourceManager.get_save_data(),
+		"market_data": MarketManager.get_save_data(),
 		"game_state": {
 			"current_state": current_state
 		}
@@ -126,3 +125,4 @@ func load_full_save_data(data: Dictionary) -> void:
 		MapManager.load_save_data(data.map_data)
 	if data.has("economy_data"):
 		ResourceManager.load_save_data(data.economy_data)
+	MarketManager.load_save_data(data.get("market_data", {}))

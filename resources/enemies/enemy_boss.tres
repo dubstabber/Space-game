@@ -23,6 +23,4 @@ preferred_distance = 400.0
 strafe_enabled = false
 abilities = ["shield", "multi_shot", "dash"]
 xp_reward = 100
-credit_reward_min = 50
-credit_reward_max = 100
 drop_chance = 1.0

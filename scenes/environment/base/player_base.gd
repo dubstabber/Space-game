@@ -76,7 +76,7 @@ func _apply_map_state() -> void:
 			var half_world := map_data.world_map_size / 2.0
 			var padded_half := half_world * 0.85
 			var col := portal_slot % 3
-			var row := portal_slot / 3
+			var row := int(floor(float(portal_slot) / 3.0))
 			global_position = -Vector2(-padded_half.x + padded_half.x * col, -padded_half.y + padded_half.y * row)
 			map_data.player_spawn_position = global_position
 	if collision_shape:

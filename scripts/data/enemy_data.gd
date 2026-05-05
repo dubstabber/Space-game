@@ -39,8 +39,6 @@ enum EnemyType {
 
 @export_group("Rewards")
 @export var xp_reward: int = 10
-@export var credit_reward_min: int = 5
-@export var credit_reward_max: int = 15
 @export var drop_chance: float = 0.1
 
 

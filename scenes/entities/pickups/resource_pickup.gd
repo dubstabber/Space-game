@@ -94,7 +94,7 @@ func _on_body_entered(body: Node2D) -> void:
 		_collect(body)
 
 
-func _collect(collector: Node2D) -> void:
+func _collect(_collector: Node2D) -> void:
 	collected.emit(resource_type, amount)
 	ResourceManager.add_resource(resource_type, amount)
 	

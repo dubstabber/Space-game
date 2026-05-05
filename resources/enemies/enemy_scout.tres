@@ -23,6 +23,4 @@ preferred_distance = 300.0
 strafe_enabled = false
 abilities = []
 xp_reward = 5
-credit_reward_min = 3
-credit_reward_max = 8
 drop_chance = 0.05
